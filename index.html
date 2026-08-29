@@ -27,7 +27,6 @@
             max-width: 700px;
         }
 
-        /* Загрузчик */
         #loader {
             text-align: center;
             padding: 40px 20px;
@@ -205,17 +204,14 @@
             font-weight: 700;
             font-size: 1.1rem;
         }
-
         .result-area .team-detail {
             color: #333;
             font-size: 0.9rem;
         }
-
         .placeholder-text {
             color: #888;
             font-weight: 400;
         }
-
         .error-text {
             color: #d32f2f;
             font-weight: 600;
@@ -233,13 +229,11 @@
 <div class="container">
     <h1>⚽ FIFA RANDOMIZER</h1>
 
-    <!-- Загрузчик -->
     <div id="loader">
         <div class="spinner"></div>
         <div>Загрузка данных...</div>
     </div>
 
-    <!-- Основной контент (скрыт пока данные не загружены) -->
     <div id="app" style="display: none;">
         <div class="fifa-version" id="fifaVersionContainer">
             <button class="fifa-btn active" data-version="26">FC 26</button>
@@ -300,16 +294,15 @@
     (function() {
         // ---------- СОСТОЯНИЕ ----------
         let state = {
-            fifaVersion: '26',       // '22'..'26'
-            teamType: 'club',        // 'club' | 'national'
+            fifaVersion: '26',
+            teamType: 'club',
             starsOne: 5,
             starsTwo: 5
         };
 
-        // Все данные (загружаются из JSON)
         let allTeams = [];
 
-        // DOM-элементы
+        // DOM
         const loader = document.getElementById('loader');
         const app = document.getElementById('app');
         const fifaBtns = document.querySelectorAll('#fifaVersionContainer .fifa-btn');
@@ -320,7 +313,7 @@
         const resultTwo = document.getElementById('resultTwo');
         const randomBtns = document.querySelectorAll('.randomize-btn');
 
-        // ---------- ЗАГРУЗКА ДАННЫХ ИЗ JSON ----------
+        // ---------- ЗАГРУЗКА ДАННЫХ ----------
         function loadData() {
             fetch('TEAMS.json')
                 .then(response => {
@@ -330,7 +323,6 @@
                     return response.json();
                 })
                 .then(data => {
-                    // Проверяем, что данные — это массив
                     if (!Array.isArray(data)) {
                         throw new Error('Данные должны быть массивом');
                     }
@@ -353,23 +345,17 @@
                 });
         }
 
-        // ---------- ПОСЛЕ ЗАГРУЗКИ ДАННЫХ ----------
+        // ---------- ПОСЛЕ ЗАГРУЗКИ ----------
         function onDataLoaded() {
-            // Скрываем загрузчик, показываем приложение
             loader.style.display = 'none';
             app.style.display = 'block';
-
-            // Обновляем UI
             updateUI();
-
-            // Устанавливаем заглушки
             resultOne.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
             resultTwo.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
         }
 
-        // ---------- ПОЛУЧЕНИЕ ОТФИЛЬТРОВАННЫХ КОМАНД ----------
+        // ---------- ФИЛЬТРАЦИЯ (ИСПРАВЛЕННАЯ) ----------
         function getFilteredTeams() {
-            // Нормализуем названия версий для сравнения
             const versionMap = {
                 '22': 'FIFA 22',
                 '23': 'FIFA 23',
@@ -378,8 +364,6 @@
                 '26': 'EA SPORTS FC 26'
             };
             const targetVersion = versionMap[state.fifaVersion] || 'FIFA 22';
-
-            // Определяем тип (приводим к нижнему регистру для сравнения)
             const targetType = state.teamType === 'club' ? 'клуб' : 'сборная';
 
             return allTeams.filter(team => {
@@ -390,6 +374,7 @@
         }
 
         function getTeamsByStars(teams, stars) {
+            // Преобразуем всё в числа для корректного сравнения
             return teams.filter(team => {
                 const teamStars = parseFloat(team['Звёзды команды']);
                 return teamStars === stars;
@@ -402,20 +387,20 @@
             return teams[idx];
         }
 
-        // ---------- ОТОБРАЖЕНИЕ РЕЗУЛЬТАТА ----------
+        // ---------- ОТОБРАЖЕНИЕ ----------
         function renderResult(container, team) {
             if (!team) {
                 container.innerHTML = `<span class="placeholder-text">Нет команд с такими звёздами</span>`;
                 return;
             }
             container.innerHTML = `
-                <div class="team-name">${team['Название команды'] || team.name || 'Без названия'}</div>
+                <div class="team-name">${team['Название команды'] || 'Без названия'}</div>
                 <div class="team-detail">${team['Страна'] || ''} • ${team['Лига'] || ''}</div>
                 <div style="font-size:0.8rem;color:#555;margin-top:4px;">⭐ ${team['Звёзды команды'] || '?'}</div>
             `;
         }
 
-        // ---------- ОСНОВНАЯ ЛОГИКА РАНДОМИЗАЦИИ ----------
+        // ---------- РАНДОМИЗАЦИЯ ----------
         function randomize(target) {
             const stars = target === 'one' ? state.starsOne : state.starsTwo;
             const filtered = getFilteredTeams();
@@ -425,7 +410,7 @@
             renderResult(container, chosen);
         }
 
-        // ---------- ОБНОВЛЕНИЕ АКТИВНЫХ КНОПОК (UI) ----------
+        // ---------- ОБНОВЛЕНИЕ UI ----------
         function updateUI() {
             fifaBtns.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.version === state.fifaVersion);
@@ -443,7 +428,7 @@
             });
         }
 
-        // ---------- ОБРАБОТЧИКИ СОБЫТИЙ ----------
+        // ---------- ОБРАБОТЧИКИ ----------
         fifaBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 state.fifaVersion = this.dataset.version;
