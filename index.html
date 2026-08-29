@@ -157,6 +157,7 @@
             cursor: pointer;
             transition: 0.15s;
             white-space: nowrap;
+            user-select: none;
         }
 
         .star-btn.active {
@@ -165,7 +166,6 @@
             border-color: #1a1a2e;
         }
 
-        /* Кнопка "Выбрать все" */
         .star-btn.select-all {
             background: #d4d4d4;
             font-size: 0.7rem;
@@ -229,11 +229,12 @@
             font-weight: 600;
         }
 
-        /* Подсказка про выбор звёзд */
         .stars-hint {
             font-size: 0.7rem;
             color: #888;
             margin-bottom: 4px;
+            width: 100%;
+            text-align: center;
         }
 
         @media (max-width: 500px) {
@@ -271,17 +272,17 @@
             <div class="team-card" id="teamOneCard">
                 <h3>Team One</h3>
                 <div class="stars-select" id="starsOneContainer">
-                    <div class="stars-hint">Выберите звёзды (можно несколько)</div>
-                    <button class="star-btn select-all" data-target="one" data-stars="all">Все ★</button>
-                    <button class="star-btn" data-target="one" data-stars="5">5★</button>
-                    <button class="star-btn" data-target="one" data-stars="4.5">4.5★</button>
-                    <button class="star-btn" data-target="one" data-stars="4">4★</button>
-                    <button class="star-btn" data-target="one" data-stars="3.5">3.5★</button>
-                    <button class="star-btn" data-target="one" data-stars="3">3★</button>
-                    <button class="star-btn" data-target="one" data-stars="2.5">2.5★</button>
-                    <button class="star-btn" data-target="one" data-stars="2">2★</button>
-                    <button class="star-btn" data-target="one" data-stars="1.5">1.5★</button>
-                    <button class="star-btn" data-target="one" data-stars="1">1★</button>
+                    <div class="stars-hint">Нажмите на звёзды (можно несколько)</div>
+                    <button class="star-btn select-all active" data-target="one" data-stars="all">Все ★</button>
+                    <button class="star-btn active" data-target="one" data-stars="5">5★</button>
+                    <button class="star-btn active" data-target="one" data-stars="4.5">4.5★</button>
+                    <button class="star-btn active" data-target="one" data-stars="4">4★</button>
+                    <button class="star-btn active" data-target="one" data-stars="3.5">3.5★</button>
+                    <button class="star-btn active" data-target="one" data-stars="3">3★</button>
+                    <button class="star-btn active" data-target="one" data-stars="2.5">2.5★</button>
+                    <button class="star-btn active" data-target="one" data-stars="2">2★</button>
+                    <button class="star-btn active" data-target="one" data-stars="1.5">1.5★</button>
+                    <button class="star-btn active" data-target="one" data-stars="1">1★</button>
                 </div>
                 <button class="randomize-btn" data-target="one">Randomize</button>
                 <div class="result-area" id="resultOne">
@@ -292,17 +293,17 @@
             <div class="team-card" id="teamTwoCard">
                 <h3>Team Two</h3>
                 <div class="stars-select" id="starsTwoContainer">
-                    <div class="stars-hint">Выберите звёзды (можно несколько)</div>
-                    <button class="star-btn select-all" data-target="two" data-stars="all">Все ★</button>
-                    <button class="star-btn" data-target="two" data-stars="5">5★</button>
-                    <button class="star-btn" data-target="two" data-stars="4.5">4.5★</button>
-                    <button class="star-btn" data-target="two" data-stars="4">4★</button>
-                    <button class="star-btn" data-target="two" data-stars="3.5">3.5★</button>
-                    <button class="star-btn" data-target="two" data-stars="3">3★</button>
-                    <button class="star-btn" data-target="two" data-stars="2.5">2.5★</button>
-                    <button class="star-btn" data-target="two" data-stars="2">2★</button>
-                    <button class="star-btn" data-target="two" data-stars="1.5">1.5★</button>
-                    <button class="star-btn" data-target="two" data-stars="1">1★</button>
+                    <div class="stars-hint">Нажмите на звёзды (можно несколько)</div>
+                    <button class="star-btn select-all active" data-target="two" data-stars="all">Все ★</button>
+                    <button class="star-btn active" data-target="two" data-stars="5">5★</button>
+                    <button class="star-btn active" data-target="two" data-stars="4.5">4.5★</button>
+                    <button class="star-btn active" data-target="two" data-stars="4">4★</button>
+                    <button class="star-btn active" data-target="two" data-stars="3.5">3.5★</button>
+                    <button class="star-btn active" data-target="two" data-stars="3">3★</button>
+                    <button class="star-btn active" data-target="two" data-stars="2.5">2.5★</button>
+                    <button class="star-btn active" data-target="two" data-stars="2">2★</button>
+                    <button class="star-btn active" data-target="two" data-stars="1.5">1.5★</button>
+                    <button class="star-btn active" data-target="two" data-stars="1">1★</button>
                 </div>
                 <button class="randomize-btn" data-target="two">Randomize</button>
                 <div class="result-area" id="resultTwo">
@@ -319,11 +320,12 @@
         let state = {
             fifaVersion: '26',
             teamType: 'club',
-            starsOne: new Set([5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1]), // все звёзды по умолчанию
+            starsOne: new Set([5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1]),
             starsTwo: new Set([5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1])
         };
 
         let allTeams = [];
+        let isInitialized = false;
 
         // DOM
         const loader = document.getElementById('loader');
@@ -373,60 +375,73 @@
 
             // Навешиваем обработчики на звёзды
             initStarHandlers();
+            isInitialized = true;
 
             updateUI();
             resultOne.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
             resultTwo.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
         }
 
-        // ---------- ИНИЦИАЛИЗАЦИЯ ЗВЁЗД ----------
+        // ---------- ОБРАБОТЧИКИ ДЛЯ ЗВЁЗД ----------
         function initStarHandlers() {
-            // Все кнопки звёзд для Team One
-            document.querySelectorAll('#starsOneContainer .star-btn').forEach(btn => {
+            const allStarButtons = document.querySelectorAll('.star-btn');
+
+            allStarButtons.forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    const target = this.dataset.target;
-                    const starsValue = this.dataset.stars;
+
+                    const target = this.dataset.target; // 'one' или 'two'
+                    const starsValue = this.dataset.stars; // 'all' или число
+                    const set = target === 'one' ? state.starsOne : state.starsTwo;
+                    const containerId = target === 'one' ? '#starsOneContainer' : '#starsTwoContainer';
 
                     if (starsValue === 'all') {
-                        // Кнопка "Все" — выбираем все звёзды
+                        // Кнопка "Все" — переключаем все звёзды
                         const allStars = [5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1];
-                        const set = target === 'one' ? state.starsOne : state.starsTwo;
-                        allStars.forEach(s => set.add(s));
-                        // Также делаем активной кнопку "Все"
-                        document.querySelectorAll(`#stars${target === 'one' ? 'One' : 'Two'}Container .star-btn`).forEach(b => {
-                            if (b.dataset.stars === 'all') {
-                                b.classList.add('active');
-                            } else {
-                                b.classList.add('active');
-                            }
-                        });
-                        updateUI();
+                        const allSelected = allStars.every(s => set.has(s));
+
+                        if (allSelected) {
+                            // Если все выбраны — очищаем всё
+                            set.clear();
+                        } else {
+                            // Если не все — выбираем все
+                            allStars.forEach(s => set.add(s));
+                        }
+
+                        // Обновляем все кнопки в этом контейнере
+                        updateStarUI(target, set);
                         return;
                     }
 
+                    // Обычная звезда — переключаем (toggle)
                     const star = parseFloat(starsValue);
-                    const set = target === 'one' ? state.starsOne : state.starsTwo;
-
-                    // Переключаем (toggle)
                     if (set.has(star)) {
                         set.delete(star);
                     } else {
                         set.add(star);
                     }
 
-                    // Если выбраны все звёзды — подсвечиваем кнопку "Все"
-                    const allStars = [5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1];
-                    const allSelected = allStars.every(s => set.has(s));
-                    const containerId = target === 'one' ? '#starsOneContainer' : '#starsTwoContainer';
-                    document.querySelectorAll(`${containerId} .star-btn`).forEach(b => {
-                        if (b.dataset.stars === 'all') {
-                            b.classList.toggle('active', allSelected);
-                        }
-                    });
-
-                    updateUI();
+                    // Обновляем UI для этого контейнера
+                    updateStarUI(target, set);
                 });
+            });
+        }
+
+        // ---------- ОБНОВЛЕНИЕ UI ДЛЯ ЗВЁЗД ----------
+        function updateStarUI(target, set) {
+            const containerId = target === 'one' ? '#starsOneContainer' : '#starsTwoContainer';
+            const buttons = document.querySelectorAll(`${containerId} .star-btn`);
+
+            const allStars = [5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1];
+            const allSelected = allStars.every(s => set.has(s));
+
+            buttons.forEach(btn => {
+                if (btn.dataset.stars === 'all') {
+                    btn.classList.toggle('active', allSelected);
+                } else {
+                    const star = parseFloat(btn.dataset.stars);
+                    btn.classList.toggle('active', set.has(star));
+                }
             });
         }
 
@@ -450,9 +465,7 @@
         }
 
         function getTeamsByStars(teams, starsSet) {
-            // Если множество пустое — возвращаем пустой массив
             if (starsSet.size === 0) return [];
-
             return teams.filter(team => {
                 const teamStars = parseFloat(team['Звёзды команды']);
                 return starsSet.has(teamStars);
@@ -465,7 +478,7 @@
             return teams[idx];
         }
 
-        // ---------- ОТОБРАЖЕНИЕ ----------
+        // ---------- ОТОБРАЖЕНИЕ РЕЗУЛЬТАТА ----------
         function renderResult(container, team) {
             if (!team) {
                 container.innerHTML = `<span class="placeholder-text">Нет команд с такими звёздами</span>`;
@@ -488,7 +501,7 @@
             renderResult(container, chosen);
         }
 
-        // ---------- ОБНОВЛЕНИЕ UI ----------
+        // ---------- ОБНОВЛЕНИЕ ОСТАЛЬНОГО UI ----------
         function updateUI() {
             // Версии FIFA
             fifaBtns.forEach(btn => {
@@ -500,26 +513,9 @@
                 btn.classList.toggle('active', btn.dataset.type === state.teamType);
             });
 
-            // Звёзды — обновляем все кнопки для Team One и Team Two
+            // Звёзды
             updateStarUI('one', state.starsOne);
             updateStarUI('two', state.starsTwo);
-        }
-
-        function updateStarUI(target, set) {
-            const containerId = target === 'one' ? '#starsOneContainer' : '#starsTwoContainer';
-            const buttons = document.querySelectorAll(`${containerId} .star-btn`);
-
-            const allStars = [5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1];
-            const allSelected = allStars.every(s => set.has(s));
-
-            buttons.forEach(btn => {
-                if (btn.dataset.stars === 'all') {
-                    btn.classList.toggle('active', allSelected);
-                } else {
-                    const star = parseFloat(btn.dataset.stars);
-                    btn.classList.toggle('active', set.has(star));
-                }
-            });
         }
 
         // ---------- ОБРАБОТЧИКИ (FIFA версии и тип) ----------
