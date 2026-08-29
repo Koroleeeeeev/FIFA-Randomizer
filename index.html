@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
     <title>FIFA RANDOMIZER</title>
     <style>
-        /* Сброс и базовые стили */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -28,7 +27,28 @@
             max-width: 700px;
         }
 
-        /* Заголовок */
+        /* Загрузчик */
+        #loader {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 1.2rem;
+            color: #555;
+        }
+        #loader .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1a1a2e;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         h1 {
             font-size: 2rem;
             font-weight: 700;
@@ -38,7 +58,6 @@
             color: #111;
         }
 
-        /* Выбор версии FIFA */
         .fifa-version {
             display: flex;
             flex-wrap: wrap;
@@ -66,7 +85,6 @@
             border-color: #1a1a2e;
         }
 
-        /* Выбор типа команд (клубы / сборные) */
         .team-type {
             display: flex;
             justify-content: center;
@@ -92,7 +110,6 @@
             color: white;
         }
 
-        /* Блоки Team One и Team Two */
         .teams-row {
             display: flex;
             flex-direction: row;
@@ -184,12 +201,6 @@
             line-height: 1.5;
         }
 
-        .result-area img {
-            max-width: 48px;
-            height: auto;
-            margin-bottom: 6px;
-        }
-
         .result-area .team-name {
             font-weight: 700;
             font-size: 1.1rem;
@@ -205,7 +216,11 @@
             font-weight: 400;
         }
 
-        /* Адаптация под телефон */
+        .error-text {
+            color: #d32f2f;
+            font-weight: 600;
+        }
+
         @media (max-width: 500px) {
             h1 { font-size: 1.8rem; }
             .team-card { flex: 1 1 100%; }
@@ -218,60 +233,64 @@
 <div class="container">
     <h1>⚽ FIFA RANDOMIZER</h1>
 
-    <!-- Версии FIFA -->
-    <div class="fifa-version" id="fifaVersionContainer">
-        <button class="fifa-btn active" data-version="26">FC 26</button>
-        <button class="fifa-btn" data-version="25">FC 25</button>
-        <button class="fifa-btn" data-version="24">FC 24</button>
-        <button class="fifa-btn" data-version="23">FIFA 23</button>
-        <button class="fifa-btn" data-version="22">FIFA 22</button>
+    <!-- Загрузчик -->
+    <div id="loader">
+        <div class="spinner"></div>
+        <div>Загрузка данных...</div>
     </div>
 
-    <!-- Клубы / Сборные -->
-    <div class="team-type" id="teamTypeContainer">
-        <button class="type-btn active" data-type="club">Club Teams</button>
-        <button class="type-btn" data-type="national">International Teams</button>
-    </div>
-
-    <!-- Блоки Team One и Team Two -->
-    <div class="teams-row">
-        <!-- Team One -->
-        <div class="team-card" id="teamOneCard">
-            <h3>Team One</h3>
-            <div class="stars-select" id="starsOneContainer">
-                <button class="star-btn active" data-stars="5">5★</button>
-                <button class="star-btn" data-stars="4.5">4.5★</button>
-                <button class="star-btn" data-stars="4">4★</button>
-                <button class="star-btn" data-stars="3.5">3.5★</button>
-                <button class="star-btn" data-stars="3">3★</button>
-                <button class="star-btn" data-stars="2.5">2.5★</button>
-                <button class="star-btn" data-stars="2">2★</button>
-                <button class="star-btn" data-stars="1.5">1.5★</button>
-                <button class="star-btn" data-stars="1">1★</button>
-            </div>
-            <button class="randomize-btn" data-target="one">Randomize</button>
-            <div class="result-area" id="resultOne">
-                <span class="placeholder-text">Нажмите Randomize</span>
-            </div>
+    <!-- Основной контент (скрыт пока данные не загружены) -->
+    <div id="app" style="display: none;">
+        <div class="fifa-version" id="fifaVersionContainer">
+            <button class="fifa-btn active" data-version="26">FC 26</button>
+            <button class="fifa-btn" data-version="25">FC 25</button>
+            <button class="fifa-btn" data-version="24">FC 24</button>
+            <button class="fifa-btn" data-version="23">FIFA 23</button>
+            <button class="fifa-btn" data-version="22">FIFA 22</button>
         </div>
 
-        <!-- Team Two -->
-        <div class="team-card" id="teamTwoCard">
-            <h3>Team Two</h3>
-            <div class="stars-select" id="starsTwoContainer">
-                <button class="star-btn active" data-stars="5">5★</button>
-                <button class="star-btn" data-stars="4.5">4.5★</button>
-                <button class="star-btn" data-stars="4">4★</button>
-                <button class="star-btn" data-stars="3.5">3.5★</button>
-                <button class="star-btn" data-stars="3">3★</button>
-                <button class="star-btn" data-stars="2.5">2.5★</button>
-                <button class="star-btn" data-stars="2">2★</button>
-                <button class="star-btn" data-stars="1.5">1.5★</button>
-                <button class="star-btn" data-stars="1">1★</button>
+        <div class="team-type" id="teamTypeContainer">
+            <button class="type-btn active" data-type="club">Club Teams</button>
+            <button class="type-btn" data-type="national">International Teams</button>
+        </div>
+
+        <div class="teams-row">
+            <div class="team-card" id="teamOneCard">
+                <h3>Team One</h3>
+                <div class="stars-select" id="starsOneContainer">
+                    <button class="star-btn active" data-stars="5">5★</button>
+                    <button class="star-btn" data-stars="4.5">4.5★</button>
+                    <button class="star-btn" data-stars="4">4★</button>
+                    <button class="star-btn" data-stars="3.5">3.5★</button>
+                    <button class="star-btn" data-stars="3">3★</button>
+                    <button class="star-btn" data-stars="2.5">2.5★</button>
+                    <button class="star-btn" data-stars="2">2★</button>
+                    <button class="star-btn" data-stars="1.5">1.5★</button>
+                    <button class="star-btn" data-stars="1">1★</button>
+                </div>
+                <button class="randomize-btn" data-target="one">Randomize</button>
+                <div class="result-area" id="resultOne">
+                    <span class="placeholder-text">Нажмите Randomize</span>
+                </div>
             </div>
-            <button class="randomize-btn" data-target="two">Randomize</button>
-            <div class="result-area" id="resultTwo">
-                <span class="placeholder-text">Нажмите Randomize</span>
+
+            <div class="team-card" id="teamTwoCard">
+                <h3>Team Two</h3>
+                <div class="stars-select" id="starsTwoContainer">
+                    <button class="star-btn active" data-stars="5">5★</button>
+                    <button class="star-btn" data-stars="4.5">4.5★</button>
+                    <button class="star-btn" data-stars="4">4★</button>
+                    <button class="star-btn" data-stars="3.5">3.5★</button>
+                    <button class="star-btn" data-stars="3">3★</button>
+                    <button class="star-btn" data-stars="2.5">2.5★</button>
+                    <button class="star-btn" data-stars="2">2★</button>
+                    <button class="star-btn" data-stars="1.5">1.5★</button>
+                    <button class="star-btn" data-stars="1">1★</button>
+                </div>
+                <button class="randomize-btn" data-target="two">Randomize</button>
+                <div class="result-area" id="resultTwo">
+                    <span class="placeholder-text">Нажмите Randomize</span>
+                </div>
             </div>
         </div>
     </div>
@@ -279,43 +298,6 @@
 
 <script>
     (function() {
-        // ---------- БАЗА ДАННЫХ КОМАНД (клубы + сборные) ----------
-        // Структура: { name, country, league, stars, type, emblem }
-        // Для демонстрации добавлены топ-клубы и сборные из FIFA 22-26.
-        // Вы можете дополнить этот список своими данными.
-        const ALL_TEAMS = [
-            // === КЛУБЫ (пример) ===
-            { name: "Реал Мадрид", country: "Испания", league: "La Liga", stars: 5, type: "club", emblem: "https://cdn.sofifa.net/flags/es.png" },
-            { name: "Барселона", country: "Испания", league: "La Liga", stars: 4.5, type: "club", emblem: "https://cdn.sofifa.net/flags/es.png" },
-            { name: "Атлетико", country: "Испания", league: "La Liga", stars: 4.5, type: "club", emblem: "https://cdn.sofifa.net/flags/es.png" },
-            { name: "Бавария", country: "Германия", league: "Bundesliga", stars: 5, type: "club", emblem: "https://cdn.sofifa.net/flags/de.png" },
-            { name: "Боруссия Дортмунд", country: "Германия", league: "Bundesliga", stars: 4.5, type: "club", emblem: "https://cdn.sofifa.net/flags/de.png" },
-            { name: "Манчестер Сити", country: "Англия", league: "Premier League", stars: 5, type: "club", emblem: "https://cdn.sofifa.net/flags/gb.png" },
-            { name: "Ливерпуль", country: "Англия", league: "Premier League", stars: 5, type: "club", emblem: "https://cdn.sofifa.net/flags/gb.png" },
-            { name: "Челси", country: "Англия", league: "Premier League", stars: 4.5, type: "club", emblem: "https://cdn.sofifa.net/flags/gb.png" },
-            { name: "Арсенал", country: "Англия", league: "Premier League", stars: 4.5, type: "club", emblem: "https://cdn.sofifa.net/flags/gb.png" },
-            { name: "ПСЖ", country: "Франция", league: "Ligue 1", stars: 5, type: "club", emblem: "https://cdn.sofifa.net/flags/fr.png" },
-            { name: "Милан", country: "Италия", league: "Serie A", stars: 4.5, type: "club", emblem: "https://cdn.sofifa.net/flags/it.png" },
-            { name: "Интер", country: "Италия", league: "Serie A", stars: 4.5, type: "club", emblem: "https://cdn.sofifa.net/flags/it.png" },
-            { name: "Ювентус", country: "Италия", league: "Serie A", stars: 4.5, type: "club", emblem: "https://cdn.sofifa.net/flags/it.png" },
-            { name: "Наполи", country: "Италия", league: "Serie A", stars: 4, type: "club", emblem: "https://cdn.sofifa.net/flags/it.png" },
-            { name: "Аякс", country: "Нидерланды", league: "Eredivisie", stars: 4, type: "club", emblem: "https://cdn.sofifa.net/flags/nl.png" },
-            { name: "Порту", country: "Португалия", league: "Primeira Liga", stars: 4, type: "club", emblem: "https://cdn.sofifa.net/flags/pt.png" },
-            { name: "Спортинг", country: "Португалия", league: "Primeira Liga", stars: 3.5, type: "club", emblem: "https://cdn.sofifa.net/flags/pt.png" },
-
-            // === СБОРНЫЕ (пример) ===
-            { name: "Сборная Аргентины", country: "Аргентина", league: "International", stars: 5, type: "national", emblem: "https://cdn.sofifa.net/flags/ar.png" },
-            { name: "Сборная Бразилии", country: "Бразилия", league: "International", stars: 5, type: "national", emblem: "https://cdn.sofifa.net/flags/br.png" },
-            { name: "Сборная Франции", country: "Франция", league: "International", stars: 5, type: "national", emblem: "https://cdn.sofifa.net/flags/fr.png" },
-            { name: "Сборная Англии", country: "Англия", league: "International", stars: 5, type: "national", emblem: "https://cdn.sofifa.net/flags/gb.png" },
-            { name: "Сборная Бельгии", country: "Бельгия", league: "International", stars: 4.5, type: "national", emblem: "https://cdn.sofifa.net/flags/be.png" },
-            { name: "Сборная Португалии", country: "Португалия", league: "International", stars: 4.5, type: "national", emblem: "https://cdn.sofifa.net/flags/pt.png" },
-            { name: "Сборная Испании", country: "Испания", league: "International", stars: 4.5, type: "national", emblem: "https://cdn.sofifa.net/flags/es.png" },
-            { name: "Сборная Германии", country: "Германия", league: "International", stars: 4.5, type: "national", emblem: "https://cdn.sofifa.net/flags/de.png" },
-            { name: "Сборная Италии", country: "Италия", league: "International", stars: 4.5, type: "national", emblem: "https://cdn.sofifa.net/flags/it.png" },
-            { name: "Сборная Нидерландов", country: "Нидерланды", league: "International", stars: 4.5, type: "national", emblem: "https://cdn.sofifa.net/flags/nl.png" },
-        ];
-
         // ---------- СОСТОЯНИЕ ----------
         let state = {
             fifaVersion: '26',       // '22'..'26'
@@ -324,7 +306,12 @@
             starsTwo: 5
         };
 
-        // ---------- DOM-ЭЛЕМЕНТЫ ----------
+        // Все данные (загружаются из JSON)
+        let allTeams = [];
+
+        // DOM-элементы
+        const loader = document.getElementById('loader');
+        const app = document.getElementById('app');
         const fifaBtns = document.querySelectorAll('#fifaVersionContainer .fifa-btn');
         const typeBtns = document.querySelectorAll('#teamTypeContainer .type-btn');
         const starOneBtns = document.querySelectorAll('#starsOneContainer .star-btn');
@@ -333,15 +320,80 @@
         const resultTwo = document.getElementById('resultTwo');
         const randomBtns = document.querySelectorAll('.randomize-btn');
 
-        // ---------- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ----------
+        // ---------- ЗАГРУЗКА ДАННЫХ ИЗ JSON ----------
+        function loadData() {
+            fetch('TEAMS.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Проверяем, что данные — это массив
+                    if (!Array.isArray(data)) {
+                        throw new Error('Данные должны быть массивом');
+                    }
+                    allTeams = data;
+                    console.log(`✅ Загружено ${allTeams.length} команд`);
+                    onDataLoaded();
+                })
+                .catch(error => {
+                    console.error('❌ Ошибка загрузки:', error);
+                    loader.innerHTML = `
+                        <div class="error-text">⚠️ Ошибка загрузки данных</div>
+                        <p style="margin-top:12px;font-size:0.9rem;color:#666;">
+                            Проверьте, что файл <strong>TEAMS.json</strong> находится в той же папке, что и index.html<br>
+                            <span style="font-size:0.8rem;">${error.message}</span>
+                        </p>
+                        <button onclick="location.reload()" style="margin-top:16px;padding:10px 30px;border-radius:30px;border:2px solid #1a1a2e;background:white;font-weight:600;cursor:pointer;">
+                            🔄 Обновить
+                        </button>
+                    `;
+                });
+        }
+
+        // ---------- ПОСЛЕ ЗАГРУЗКИ ДАННЫХ ----------
+        function onDataLoaded() {
+            // Скрываем загрузчик, показываем приложение
+            loader.style.display = 'none';
+            app.style.display = 'block';
+
+            // Обновляем UI
+            updateUI();
+
+            // Устанавливаем заглушки
+            resultOne.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
+            resultTwo.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
+        }
+
+        // ---------- ПОЛУЧЕНИЕ ОТФИЛЬТРОВАННЫХ КОМАНД ----------
         function getFilteredTeams() {
-            // Фильтр по типу (клуб / сборная) и звёздам (для каждой команды своя звезда)
-            const type = state.teamType;
-            return ALL_TEAMS.filter(t => t.type === type);
+            // Нормализуем названия версий для сравнения
+            const versionMap = {
+                '22': 'FIFA 22',
+                '23': 'FIFA 23',
+                '24': 'EA SPORTS FC 24',
+                '25': 'EA SPORTS FC 25',
+                '26': 'EA SPORTS FC 26'
+            };
+            const targetVersion = versionMap[state.fifaVersion] || 'FIFA 22';
+
+            // Определяем тип (приводим к нижнему регистру для сравнения)
+            const targetType = state.teamType === 'club' ? 'клуб' : 'сборная';
+
+            return allTeams.filter(team => {
+                const versionMatch = team['Версия FIFA'] === targetVersion;
+                const typeMatch = team['Тип (клуб/сборная)']?.toLowerCase() === targetType;
+                return versionMatch && typeMatch;
+            });
         }
 
         function getTeamsByStars(teams, stars) {
-            return teams.filter(t => t.stars === stars);
+            return teams.filter(team => {
+                const teamStars = parseFloat(team['Звёзды команды']);
+                return teamStars === stars;
+            });
         }
 
         function pickRandom(teams) {
@@ -350,16 +402,16 @@
             return teams[idx];
         }
 
+        // ---------- ОТОБРАЖЕНИЕ РЕЗУЛЬТАТА ----------
         function renderResult(container, team) {
             if (!team) {
                 container.innerHTML = `<span class="placeholder-text">Нет команд с такими звёздами</span>`;
                 return;
             }
             container.innerHTML = `
-                <img src="${team.emblem || ''}" alt="эмблема" style="width:40px;height:40px;object-fit:contain;">
-                <div class="team-name">${team.name}</div>
-                <div class="team-detail">${team.country} • ${team.league}</div>
-                <div style="font-size:0.8rem;color:#555;margin-top:4px;">⭐ ${team.stars}</div>
+                <div class="team-name">${team['Название команды'] || team.name || 'Без названия'}</div>
+                <div class="team-detail">${team['Страна'] || ''} • ${team['Лига'] || ''}</div>
+                <div style="font-size:0.8rem;color:#555;margin-top:4px;">⭐ ${team['Звёзды команды'] || '?'}</div>
             `;
         }
 
@@ -375,20 +427,16 @@
 
         // ---------- ОБНОВЛЕНИЕ АКТИВНЫХ КНОПОК (UI) ----------
         function updateUI() {
-            // Версии FIFA
             fifaBtns.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.version === state.fifaVersion);
             });
-            // Тип команды
             typeBtns.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.type === state.teamType);
             });
-            // Звёзды One
             starOneBtns.forEach(btn => {
                 const val = parseFloat(btn.dataset.stars);
                 btn.classList.toggle('active', val === state.starsOne);
             });
-            // Звёзды Two
             starTwoBtns.forEach(btn => {
                 const val = parseFloat(btn.dataset.stars);
                 btn.classList.toggle('active', val === state.starsTwo);
@@ -396,18 +444,15 @@
         }
 
         // ---------- ОБРАБОТЧИКИ СОБЫТИЙ ----------
-        // Выбор версии FIFA
         fifaBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 state.fifaVersion = this.dataset.version;
                 updateUI();
-                // Можно очистить результаты при смене версии (по желанию)
                 resultOne.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
                 resultTwo.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
             });
         });
 
-        // Выбор типа (клубы / сборные)
         typeBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 state.teamType = this.dataset.type;
@@ -417,7 +462,6 @@
             });
         });
 
-        // Выбор звёзд для Team One
         starOneBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 state.starsOne = parseFloat(this.dataset.stars);
@@ -425,7 +469,6 @@
             });
         });
 
-        // Выбор звёзд для Team Two
         starTwoBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 state.starsTwo = parseFloat(this.dataset.stars);
@@ -433,19 +476,15 @@
             });
         });
 
-        // Кнопки Randomize
         randomBtns.forEach(btn => {
             btn.addEventListener('click', function() {
-                const target = this.dataset.target; // 'one' или 'two'
+                const target = this.dataset.target;
                 randomize(target);
             });
         });
 
-        // ---------- ИНИЦИАЛИЗАЦИЯ ----------
-        updateUI();
-        // По умолчанию показываем заглушки
-        resultOne.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
-        resultTwo.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
+        // ---------- ЗАПУСК ----------
+        loadData();
     })();
 </script>
 
