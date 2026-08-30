@@ -320,13 +320,13 @@
         </div>
 
         <div class="team-type" id="teamTypeContainer">
-            <button class="type-btn active" data-type="club" id="clubBtn">Club Teams</button>
-            <button class="type-btn" data-type="national" id="nationalBtn">International Teams</button>
+            <button class="type-btn active" data-type="club" id="clubBtn">Клубные команды</button>
+            <button class="type-btn" data-type="national" id="nationalBtn">Национальные команды</button>
         </div>
 
         <div class="teams-row">
             <div class="team-card" id="teamOneCard">
-                <h3 id="teamOneTitle">Team One</h3>
+                <h3 id="teamOneTitle">Команда 1</h3>
                 <div class="stars-select" id="starsOneContainer">
                     <div class="stars-hint" id="starsHintOne">Нажмите на звёзды (можно несколько)</div>
                     <button class="star-btn select-all active" data-target="one" data-stars="all" id="allBtnOne">Все</button>
@@ -340,14 +340,14 @@
                     <button class="star-btn active" data-target="one" data-stars="1.5">1.5★</button>
                     <button class="star-btn active" data-target="one" data-stars="1">1★</button>
                 </div>
-                <button class="randomize-btn" data-target="one" id="randomizeBtnOne">Randomize</button>
+                <button class="randomize-btn" data-target="one" id="randomizeBtnOne">Случайная команда</button>
                 <div class="result-area" id="resultOne">
-                    <span class="placeholder-text" id="placeholderOne">Нажмите Randomize</span>
+                    <span class="placeholder-text" id="placeholderOne">Нажмите "Случайная команда"</span>
                 </div>
             </div>
 
             <div class="team-card" id="teamTwoCard">
-                <h3 id="teamTwoTitle">Team Two</h3>
+                <h3 id="teamTwoTitle">Команда 2</h3>
                 <div class="stars-select" id="starsTwoContainer">
                     <div class="stars-hint" id="starsHintTwo">Нажмите на звёзды (можно несколько)</div>
                     <button class="star-btn select-all active" data-target="two" data-stars="all" id="allBtnTwo">Все</button>
@@ -361,9 +361,9 @@
                     <button class="star-btn active" data-target="two" data-stars="1.5">1.5★</button>
                     <button class="star-btn active" data-target="two" data-stars="1">1★</button>
                 </div>
-                <button class="randomize-btn" data-target="two" id="randomizeBtnTwo">Randomize</button>
+                <button class="randomize-btn" data-target="two" id="randomizeBtnTwo">Случайная команда</button>
                 <div class="result-area" id="resultTwo">
-                    <span class="placeholder-text" id="placeholderTwo">Нажмите Randomize</span>
+                    <span class="placeholder-text" id="placeholderTwo">Нажмите "Случайная команда"</span>
                 </div>
             </div>
         </div>
@@ -377,14 +377,14 @@
             ru: {
                 title: '⚽ FIFA RANDOMIZER',
                 loader: 'Загрузка данных...',
-                club: 'Club Teams',
-                national: 'International Teams',
-                teamOne: 'Team One',
-                teamTwo: 'Team Two',
+                club: 'Клубные команды',
+                national: 'Национальные команды',
+                teamOne: 'Команда 1',
+                teamTwo: 'Команда 2',
                 hint: 'Нажмите на звёзды (можно несколько)',
                 all: 'Все',
-                randomize: 'Randomize',
-                placeholder: 'Нажмите Randomize',
+                randomize: 'Случайная команда',
+                placeholder: 'Нажмите "Случайная команда"',
                 noTeams: 'Нет команд с такими звёздами'
             },
             en: {
@@ -474,7 +474,7 @@
             randomizeBtnOne.textContent = t.randomize;
             randomizeBtnTwo.textContent = t.randomize;
 
-            // Плейсхолдеры (если нет результата)
+            // Плейсхолдеры
             const placeholderText = t.placeholder;
             if (resultOne.querySelector('.placeholder-text')) {
                 placeholderOne.textContent = placeholderText;
@@ -482,8 +482,6 @@
             if (resultTwo.querySelector('.placeholder-text')) {
                 placeholderTwo.textContent = placeholderText;
             }
-
-            // Обновляем кнопки звёзд (они не переводятся, они цифровые)
         }
 
         // ---------- ЗАГРУЗКА ДАННЫХ ----------
@@ -525,8 +523,8 @@
             initStarHandlers();
             updateUI();
             setLanguage('ru');
-            resultOne.innerHTML = `<span class="placeholder-text" id="placeholderOne">Нажмите Randomize</span>`;
-            resultTwo.innerHTML = `<span class="placeholder-text" id="placeholderTwo">Нажмите Randomize</span>`;
+            resultOne.innerHTML = `<span class="placeholder-text" id="placeholderOne">Нажмите "Случайная команда"</span>`;
+            resultTwo.innerHTML = `<span class="placeholder-text" id="placeholderTwo">Нажмите "Случайная команда"</span>`;
         }
 
         // ---------- ФУНКЦИЯ ДЛЯ ОТОБРАЖЕНИЯ ЗВЁЗД В РЕЗУЛЬТАТЕ ----------
