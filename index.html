@@ -3,6 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+
+    <!-- ---------- ОСНОВНЫЕ МЕТА-ТЕГИ ---------- -->
+    <title>FIFA RANDOMIZER — Случайный выбор команд FIFA 22-26</title>
+    <meta name="description" content="Случайный выбор клубов и сборных из FIFA 22, FIFA 23, EA SPORTS FC 24, FC 25 и FC 26. Фильтр по звёздам, лигам и типу команд. Рандомайзер для FIFA.">
+    <meta name="keywords" content="FIFA, рандомайзер, случайная команда, FIFA 22, FIFA 23, FC 24, FC 25, FC 26, выбор команды, футбол, клубы, сборные, звёзды, рейтинг, randomizer, random team, football, soccer">
+    <meta name="robots" content="index, follow">
+
+    <!-- ---------- АВТОР И ПРАВА ---------- -->
+    <meta name="author" content="Koroleeeeeev">
+    <meta name="copyright" content="Koroleeeeeev">
+    <meta name="creator" content="Koroleeeeeev">
+    <meta name="publisher" content="Koroleeeeeev">
+
+    <!-- ---------- ДЛЯ ПОИСКОВИКОВ (Open Graph / Facebook / VK) ---------- -->
+    <meta property="og:title" content="FIFA RANDOMIZER — Случайный выбор команд FIFA">
+    <meta property="og:description" content="Выберите случайную команду из FIFA 22, 23, FC 24, FC 25 или FC 26. Фильтр по звёздам и типу команд.">
+    <meta property="og:url" content="https://koroleeeeeev.github.io/FIFA-Randomizer/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FIFA RANDOMIZER">
+    <meta property="og:locale" content="ru_RU">
+
+    <!-- ---------- ДЛЯ TWITTER ---------- -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="FIFA RANDOMIZER — Случайный выбор команд FIFA">
+    <meta name="twitter:description" content="Случайный выбор клубов и сборных из FIFA 22-26 с фильтром по звёздам.">
+    <meta name="twitter:site" content="@koroleeeeeev">
+
+    <!-- ---------- ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ ---------- -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FIFA RANDOMIZER">
+    <meta name="theme-color" content="#1a1a2e">
+
+    <!-- ---------- ДЛЯ ИНДЕКСАЦИИ ---------- -->
+    <meta name="googlebot" content="index, follow">
+    <meta name="yandex" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+
+    <!-- ---------- ССЫЛКИ НА АЛЬТЕРНАТИВНЫЕ ВЕРСИИ ---------- -->
+    <link rel="alternate" hreflang="ru" href="https://koroleeeeeev.github.io/FIFA-Randomizer/">
+    <link rel="alternate" hreflang="en" href="https://koroleeeeeev.github.io/FIFA-Randomizer/?lang=en">
+    <link rel="canonical" href="https://koroleeeeeev.github.io/FIFA-Randomizer/">
+
     <title>FIFA RANDOMIZER</title>
     <style>
         * {
@@ -26,6 +70,7 @@
             width: 100%;
             max-width: 700px;
             position: relative;
+            padding-top: 40px; /* ← ОТСТУП ДЛЯ ПЕРЕКЛЮЧАТЕЛЯ */
         }
 
         .lang-switch {
@@ -63,6 +108,16 @@
             background: #e0e0e0;
         }
 
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-align: center;
+            margin: 12px 0 24px;
+            color: #111;
+            padding-top: 0; /* ← УБИРАЕМ ЛИШНИЙ ОТСТУП */
+        }
+
         #loader {
             text-align: center;
             padding: 40px 20px;
@@ -82,15 +137,6 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-
-        h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-align: center;
-            margin: 12px 0 24px;
-            color: #111;
         }
 
         .fifa-version {
@@ -291,15 +337,63 @@
             text-align: center;
         }
 
+        /* ---------- АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ ---------- */
         @media (max-width: 500px) {
-            h1 { font-size: 1.8rem; }
-            .team-card { flex: 1 1 100%; }
-            .fifa-btn { padding: 6px 14px; font-size: 0.85rem; }
-            .type-btn { padding: 8px 18px; font-size: 0.9rem; }
-            .star-btn { font-size: 0.7rem; padding: 3px 10px; }
-            .result-area .team-logo { width: 50px; height: 50px; }
-            .result-area .team-stars img { width: 16px; height: 16px; }
-            .lang-btn { font-size: 0.6rem; padding: 2px 8px; }
+            .container {
+                padding-top: 44px; /* ← БОЛЬШЕ ОТСТУП ДЛЯ ТЕЛЕФОНОВ */
+            }
+
+            h1 {
+                font-size: 1.6rem;
+                margin: 8px 0 18px;
+            }
+
+            .lang-btn {
+                font-size: 0.6rem;
+                padding: 3px 10px;
+            }
+
+            .team-card {
+                flex: 1 1 100%;
+            }
+
+            .fifa-btn {
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
+
+            .type-btn {
+                padding: 8px 18px;
+                font-size: 0.85rem;
+            }
+
+            .star-btn {
+                font-size: 0.7rem;
+                padding: 3px 10px;
+            }
+
+            .result-area .team-logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .result-area .team-stars img {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .container {
+                padding-top: 48px;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+            .lang-btn {
+                font-size: 0.55rem;
+                padding: 2px 8px;
+            }
         }
     </style>
 </head>
@@ -466,7 +560,6 @@
 
         // ---------- ФУНКЦИЯ ПОЛУЧЕНИЯ ЛОГОТИПА ----------
         function getTeamLogo(teamName) {
-            // Кодируем имя для безопасного URL
             const safeName = encodeURIComponent(teamName);
             return `logos/${safeName}.png`;
         }
