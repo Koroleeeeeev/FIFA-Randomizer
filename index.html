@@ -25,6 +25,43 @@
         .container {
             width: 100%;
             max-width: 700px;
+            position: relative;
+        }
+
+        /* ---------- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА ---------- */
+        .lang-switch {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 4px;
+            background: #f0f0f0;
+            border-radius: 30px;
+            padding: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            z-index: 10;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+
+        .lang-btn.active {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: #e0e0e0;
         }
 
         #loader {
@@ -254,16 +291,23 @@
             .type-btn { padding: 8px 18px; font-size: 0.9rem; }
             .star-btn { font-size: 0.7rem; padding: 3px 10px; }
             .result-area .team-stars img { width: 16px; height: 16px; }
+            .lang-btn { font-size: 0.6rem; padding: 2px 8px; }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>⚽ FIFA RANDOMIZER</h1>
+    <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА -->
+    <div class="lang-switch">
+        <button class="lang-btn active" data-lang="ru" id="langRu">RU</button>
+        <button class="lang-btn" data-lang="en" id="langEn">EN</button>
+    </div>
+
+    <h1 id="mainTitle">⚽ FIFA RANDOMIZER</h1>
 
     <div id="loader">
         <div class="spinner"></div>
-        <div>Загрузка данных...</div>
+        <div id="loaderText">Загрузка данных...</div>
     </div>
 
     <div id="app" style="display: none;">
@@ -276,16 +320,16 @@
         </div>
 
         <div class="team-type" id="teamTypeContainer">
-            <button class="type-btn active" data-type="club">Club Teams</button>
-            <button class="type-btn" data-type="national">International Teams</button>
+            <button class="type-btn active" data-type="club" id="clubBtn">Club Teams</button>
+            <button class="type-btn" data-type="national" id="nationalBtn">International Teams</button>
         </div>
 
         <div class="teams-row">
             <div class="team-card" id="teamOneCard">
-                <h3>Team One</h3>
+                <h3 id="teamOneTitle">Team One</h3>
                 <div class="stars-select" id="starsOneContainer">
-                    <div class="stars-hint">Нажмите на звёзды (можно несколько)</div>
-                    <button class="star-btn select-all active" data-target="one" data-stars="all">Все</button>
+                    <div class="stars-hint" id="starsHintOne">Нажмите на звёзды (можно несколько)</div>
+                    <button class="star-btn select-all active" data-target="one" data-stars="all" id="allBtnOne">Все</button>
                     <button class="star-btn active" data-target="one" data-stars="5">5★</button>
                     <button class="star-btn active" data-target="one" data-stars="4.5">4.5★</button>
                     <button class="star-btn active" data-target="one" data-stars="4">4★</button>
@@ -296,17 +340,17 @@
                     <button class="star-btn active" data-target="one" data-stars="1.5">1.5★</button>
                     <button class="star-btn active" data-target="one" data-stars="1">1★</button>
                 </div>
-                <button class="randomize-btn" data-target="one">Randomize</button>
+                <button class="randomize-btn" data-target="one" id="randomizeBtnOne">Randomize</button>
                 <div class="result-area" id="resultOne">
-                    <span class="placeholder-text">Нажмите Randomize</span>
+                    <span class="placeholder-text" id="placeholderOne">Нажмите Randomize</span>
                 </div>
             </div>
 
             <div class="team-card" id="teamTwoCard">
-                <h3>Team Two</h3>
+                <h3 id="teamTwoTitle">Team Two</h3>
                 <div class="stars-select" id="starsTwoContainer">
-                    <div class="stars-hint">Нажмите на звёзды (можно несколько)</div>
-                    <button class="star-btn select-all active" data-target="two" data-stars="all">Все</button>
+                    <div class="stars-hint" id="starsHintTwo">Нажмите на звёзды (можно несколько)</div>
+                    <button class="star-btn select-all active" data-target="two" data-stars="all" id="allBtnTwo">Все</button>
                     <button class="star-btn active" data-target="two" data-stars="5">5★</button>
                     <button class="star-btn active" data-target="two" data-stars="4.5">4.5★</button>
                     <button class="star-btn active" data-target="two" data-stars="4">4★</button>
@@ -317,9 +361,9 @@
                     <button class="star-btn active" data-target="two" data-stars="1.5">1.5★</button>
                     <button class="star-btn active" data-target="two" data-stars="1">1★</button>
                 </div>
-                <button class="randomize-btn" data-target="two">Randomize</button>
+                <button class="randomize-btn" data-target="two" id="randomizeBtnTwo">Randomize</button>
                 <div class="result-area" id="resultTwo">
-                    <span class="placeholder-text">Нажмите Randomize</span>
+                    <span class="placeholder-text" id="placeholderTwo">Нажмите Randomize</span>
                 </div>
             </div>
         </div>
@@ -328,6 +372,38 @@
 
 <script>
     (function() {
+        // ---------- ПЕРЕВОДЫ ----------
+        const translations = {
+            ru: {
+                title: '⚽ FIFA RANDOMIZER',
+                loader: 'Загрузка данных...',
+                club: 'Club Teams',
+                national: 'International Teams',
+                teamOne: 'Team One',
+                teamTwo: 'Team Two',
+                hint: 'Нажмите на звёзды (можно несколько)',
+                all: 'Все',
+                randomize: 'Randomize',
+                placeholder: 'Нажмите Randomize',
+                noTeams: 'Нет команд с такими звёздами'
+            },
+            en: {
+                title: '⚽ FIFA RANDOMIZER',
+                loader: 'Loading data...',
+                club: 'Club Teams',
+                national: 'International Teams',
+                teamOne: 'Team One',
+                teamTwo: 'Team Two',
+                hint: 'Click on stars (you can select multiple)',
+                all: 'All',
+                randomize: 'Randomize',
+                placeholder: 'Press Randomize',
+                noTeams: 'No teams with these stars'
+            }
+        };
+
+        let currentLang = 'ru';
+
         // ---------- СОСТОЯНИЕ ----------
         let state = {
             fifaVersion: '26',
@@ -340,12 +416,75 @@
 
         // DOM
         const loader = document.getElementById('loader');
+        const loaderText = document.getElementById('loaderText');
         const app = document.getElementById('app');
+        const mainTitle = document.getElementById('mainTitle');
         const fifaBtns = document.querySelectorAll('#fifaVersionContainer .fifa-btn');
         const typeBtns = document.querySelectorAll('#teamTypeContainer .type-btn');
+        const clubBtn = document.getElementById('clubBtn');
+        const nationalBtn = document.getElementById('nationalBtn');
+        const teamOneTitle = document.getElementById('teamOneTitle');
+        const teamTwoTitle = document.getElementById('teamTwoTitle');
+        const starsHintOne = document.getElementById('starsHintOne');
+        const starsHintTwo = document.getElementById('starsHintTwo');
+        const allBtnOne = document.getElementById('allBtnOne');
+        const allBtnTwo = document.getElementById('allBtnTwo');
+        const randomizeBtnOne = document.getElementById('randomizeBtnOne');
+        const randomizeBtnTwo = document.getElementById('randomizeBtnTwo');
+        const placeholderOne = document.getElementById('placeholderOne');
+        const placeholderTwo = document.getElementById('placeholderTwo');
         const resultOne = document.getElementById('resultOne');
         const resultTwo = document.getElementById('resultTwo');
         const randomBtns = document.querySelectorAll('.randomize-btn');
+        const langRu = document.getElementById('langRu');
+        const langEn = document.getElementById('langEn');
+
+        // ---------- ФУНКЦИЯ ПЕРЕКЛЮЧЕНИЯ ЯЗЫКА ----------
+        function setLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+
+            // Обновляем активную кнопку языка
+            langRu.classList.toggle('active', lang === 'ru');
+            langEn.classList.toggle('active', lang === 'en');
+
+            // Заголовок
+            mainTitle.textContent = t.title;
+
+            // Загрузчик
+            loaderText.textContent = t.loader;
+
+            // Тип команд
+            clubBtn.textContent = t.club;
+            nationalBtn.textContent = t.national;
+
+            // Team One / Team Two
+            teamOneTitle.textContent = t.teamOne;
+            teamTwoTitle.textContent = t.teamTwo;
+
+            // Подсказки для звёзд
+            starsHintOne.textContent = t.hint;
+            starsHintTwo.textContent = t.hint;
+
+            // Кнопки "Все"
+            allBtnOne.textContent = t.all;
+            allBtnTwo.textContent = t.all;
+
+            // Кнопки Randomize
+            randomizeBtnOne.textContent = t.randomize;
+            randomizeBtnTwo.textContent = t.randomize;
+
+            // Плейсхолдеры (если нет результата)
+            const placeholderText = t.placeholder;
+            if (resultOne.querySelector('.placeholder-text')) {
+                placeholderOne.textContent = placeholderText;
+            }
+            if (resultTwo.querySelector('.placeholder-text')) {
+                placeholderTwo.textContent = placeholderText;
+            }
+
+            // Обновляем кнопки звёзд (они не переводятся, они цифровые)
+        }
 
         // ---------- ЗАГРУЗКА ДАННЫХ ----------
         function loadData() {
@@ -385,8 +524,9 @@
             app.style.display = 'block';
             initStarHandlers();
             updateUI();
-            resultOne.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
-            resultTwo.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
+            setLanguage('ru');
+            resultOne.innerHTML = `<span class="placeholder-text" id="placeholderOne">Нажмите Randomize</span>`;
+            resultTwo.innerHTML = `<span class="placeholder-text" id="placeholderTwo">Нажмите Randomize</span>`;
         }
 
         // ---------- ФУНКЦИЯ ДЛЯ ОТОБРАЖЕНИЯ ЗВЁЗД В РЕЗУЛЬТАТЕ ----------
@@ -496,7 +636,8 @@
         // ---------- ОТОБРАЖЕНИЕ РЕЗУЛЬТАТА ----------
         function renderResult(container, team) {
             if (!team) {
-                container.innerHTML = `<span class="placeholder-text">Нет команд с такими звёздами</span>`;
+                const noTeamsText = translations[currentLang].noTeams;
+                container.innerHTML = `<span class="placeholder-text">${noTeamsText}</span>`;
                 return;
             }
             const starsHtml = renderStars(team['Звёзды команды']);
@@ -536,8 +677,9 @@
             btn.addEventListener('click', function() {
                 state.fifaVersion = this.dataset.version;
                 updateUI();
-                resultOne.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
-                resultTwo.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
+                const placeholderText = translations[currentLang].placeholder;
+                resultOne.innerHTML = `<span class="placeholder-text">${placeholderText}</span>`;
+                resultTwo.innerHTML = `<span class="placeholder-text">${placeholderText}</span>`;
             });
         });
 
@@ -545,8 +687,9 @@
             btn.addEventListener('click', function() {
                 state.teamType = this.dataset.type;
                 updateUI();
-                resultOne.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
-                resultTwo.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
+                const placeholderText = translations[currentLang].placeholder;
+                resultOne.innerHTML = `<span class="placeholder-text">${placeholderText}</span>`;
+                resultTwo.innerHTML = `<span class="placeholder-text">${placeholderText}</span>`;
             });
         });
 
@@ -555,6 +698,15 @@
                 const target = this.dataset.target;
                 randomize(target);
             });
+        });
+
+        // ---------- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА ----------
+        langRu.addEventListener('click', function() {
+            setLanguage('ru');
+        });
+
+        langEn.addEventListener('click', function() {
+            setLanguage('en');
         });
 
         // ---------- ЗАПУСК ----------
