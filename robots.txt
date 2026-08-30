@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://koroleeeeeev.github.io/FIFA-Randomizer/sitemap.xml
