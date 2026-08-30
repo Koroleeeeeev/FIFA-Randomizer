@@ -150,7 +150,7 @@
             background: #e0e0e0;
             border: 2px solid transparent;
             border-radius: 30px;
-            padding: 4px 14px;
+            padding: 4px 12px;
             font-size: 0.8rem;
             font-weight: 600;
             color: #222;
@@ -158,6 +158,15 @@
             transition: 0.15s;
             white-space: nowrap;
             user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .star-btn img {
+            width: 14px;
+            height: 14px;
+            display: block;
         }
 
         .star-btn.active {
@@ -220,6 +229,16 @@
             color: #333;
             font-size: 0.9rem;
         }
+        .result-area .team-stars {
+            display: flex;
+            gap: 2px;
+            margin-top: 4px;
+        }
+        .result-area .team-stars img {
+            width: 18px;
+            height: 18px;
+            display: block;
+        }
         .placeholder-text {
             color: #888;
             font-weight: 400;
@@ -242,6 +261,8 @@
             .team-card { flex: 1 1 100%; }
             .fifa-btn { padding: 6px 14px; font-size: 0.85rem; }
             .type-btn { padding: 8px 18px; font-size: 0.9rem; }
+            .star-btn img { width: 12px; height: 12px; }
+            .result-area .team-stars img { width: 16px; height: 16px; }
         }
     </style>
 </head>
@@ -273,16 +294,34 @@
                 <h3>Team One</h3>
                 <div class="stars-select" id="starsOneContainer">
                     <div class="stars-hint">Нажмите на звёзды (можно несколько)</div>
-                    <button class="star-btn select-all active" data-target="one" data-stars="all">Все ★</button>
-                    <button class="star-btn active" data-target="one" data-stars="5">5★</button>
-                    <button class="star-btn active" data-target="one" data-stars="4.5">4.5★</button>
-                    <button class="star-btn active" data-target="one" data-stars="4">4★</button>
-                    <button class="star-btn active" data-target="one" data-stars="3.5">3.5★</button>
-                    <button class="star-btn active" data-target="one" data-stars="3">3★</button>
-                    <button class="star-btn active" data-target="one" data-stars="2.5">2.5★</button>
-                    <button class="star-btn active" data-target="one" data-stars="2">2★</button>
-                    <button class="star-btn active" data-target="one" data-stars="1.5">1.5★</button>
-                    <button class="star-btn active" data-target="one" data-stars="1">1★</button>
+                    <button class="star-btn select-all active" data-target="one" data-stars="all">Все</button>
+                    <button class="star-btn active" data-target="one" data-stars="5">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★">
+                    </button>
+                    <button class="star-btn active" data-target="one" data-stars="4.5">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-half.png" alt="½">
+                    </button>
+                    <button class="star-btn active" data-target="one" data-stars="4">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★">
+                    </button>
+                    <button class="star-btn active" data-target="one" data-stars="3.5">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-half.png" alt="½">
+                    </button>
+                    <button class="star-btn active" data-target="one" data-stars="3">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★">
+                    </button>
+                    <button class="star-btn active" data-target="one" data-stars="2.5">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-half.png" alt="½">
+                    </button>
+                    <button class="star-btn active" data-target="one" data-stars="2">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★">
+                    </button>
+                    <button class="star-btn active" data-target="one" data-stars="1.5">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-half.png" alt="½">
+                    </button>
+                    <button class="star-btn active" data-target="one" data-stars="1">
+                        <img src="images/star-full.png" alt="★">
+                    </button>
                 </div>
                 <button class="randomize-btn" data-target="one">Randomize</button>
                 <div class="result-area" id="resultOne">
@@ -294,16 +333,34 @@
                 <h3>Team Two</h3>
                 <div class="stars-select" id="starsTwoContainer">
                     <div class="stars-hint">Нажмите на звёзды (можно несколько)</div>
-                    <button class="star-btn select-all active" data-target="two" data-stars="all">Все ★</button>
-                    <button class="star-btn active" data-target="two" data-stars="5">5★</button>
-                    <button class="star-btn active" data-target="two" data-stars="4.5">4.5★</button>
-                    <button class="star-btn active" data-target="two" data-stars="4">4★</button>
-                    <button class="star-btn active" data-target="two" data-stars="3.5">3.5★</button>
-                    <button class="star-btn active" data-target="two" data-stars="3">3★</button>
-                    <button class="star-btn active" data-target="two" data-stars="2.5">2.5★</button>
-                    <button class="star-btn active" data-target="two" data-stars="2">2★</button>
-                    <button class="star-btn active" data-target="two" data-stars="1.5">1.5★</button>
-                    <button class="star-btn active" data-target="two" data-stars="1">1★</button>
+                    <button class="star-btn select-all active" data-target="two" data-stars="all">Все</button>
+                    <button class="star-btn active" data-target="two" data-stars="5">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★">
+                    </button>
+                    <button class="star-btn active" data-target="two" data-stars="4.5">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-half.png" alt="½">
+                    </button>
+                    <button class="star-btn active" data-target="two" data-stars="4">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★">
+                    </button>
+                    <button class="star-btn active" data-target="two" data-stars="3.5">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-half.png" alt="½">
+                    </button>
+                    <button class="star-btn active" data-target="two" data-stars="3">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★">
+                    </button>
+                    <button class="star-btn active" data-target="two" data-stars="2.5">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★"><img src="images/star-half.png" alt="½">
+                    </button>
+                    <button class="star-btn active" data-target="two" data-stars="2">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-full.png" alt="★">
+                    </button>
+                    <button class="star-btn active" data-target="two" data-stars="1.5">
+                        <img src="images/star-full.png" alt="★"><img src="images/star-half.png" alt="½">
+                    </button>
+                    <button class="star-btn active" data-target="two" data-stars="1">
+                        <img src="images/star-full.png" alt="★">
+                    </button>
                 </div>
                 <button class="randomize-btn" data-target="two">Randomize</button>
                 <div class="result-area" id="resultTwo">
@@ -325,7 +382,6 @@
         };
 
         let allTeams = [];
-        let isInitialized = false;
 
         // DOM
         const loader = document.getElementById('loader');
@@ -372,14 +428,26 @@
         function onDataLoaded() {
             loader.style.display = 'none';
             app.style.display = 'block';
-
-            // Навешиваем обработчики на звёзды
             initStarHandlers();
-            isInitialized = true;
-
             updateUI();
             resultOne.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
             resultTwo.innerHTML = `<span class="placeholder-text">Нажмите Randomize</span>`;
+        }
+
+        // ---------- ФУНКЦИЯ ДЛЯ ОТОБРАЖЕНИЯ ЗВЁЗД В РЕЗУЛЬТАТЕ ----------
+        function renderStars(starsValue) {
+            const num = parseFloat(starsValue);
+            if (isNaN(num)) return '';
+            const full = Math.floor(num);
+            const half = (num - full) >= 0.5 ? 1 : 0;
+            let html = '';
+            for (let i = 0; i < full; i++) {
+                html += `<img src="images/star-full.png" alt="★">`;
+            }
+            if (half) {
+                html += `<img src="images/star-half.png" alt="½">`;
+            }
+            return html;
         }
 
         // ---------- ОБРАБОТЧИКИ ДЛЯ ЗВЁЗД ----------
@@ -390,30 +458,24 @@
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
 
-                    const target = this.dataset.target; // 'one' или 'two'
-                    const starsValue = this.dataset.stars; // 'all' или число
+                    const target = this.dataset.target;
+                    const starsValue = this.dataset.stars;
                     const set = target === 'one' ? state.starsOne : state.starsTwo;
-                    const containerId = target === 'one' ? '#starsOneContainer' : '#starsTwoContainer';
 
                     if (starsValue === 'all') {
-                        // Кнопка "Все" — переключаем все звёзды
                         const allStars = [5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1];
                         const allSelected = allStars.every(s => set.has(s));
 
                         if (allSelected) {
-                            // Если все выбраны — очищаем всё
                             set.clear();
                         } else {
-                            // Если не все — выбираем все
                             allStars.forEach(s => set.add(s));
                         }
 
-                        // Обновляем все кнопки в этом контейнере
                         updateStarUI(target, set);
                         return;
                     }
 
-                    // Обычная звезда — переключаем (toggle)
                     const star = parseFloat(starsValue);
                     if (set.has(star)) {
                         set.delete(star);
@@ -421,13 +483,11 @@
                         set.add(star);
                     }
 
-                    // Обновляем UI для этого контейнера
                     updateStarUI(target, set);
                 });
             });
         }
 
-        // ---------- ОБНОВЛЕНИЕ UI ДЛЯ ЗВЁЗД ----------
         function updateStarUI(target, set) {
             const containerId = target === 'one' ? '#starsOneContainer' : '#starsTwoContainer';
             const buttons = document.querySelectorAll(`${containerId} .star-btn`);
@@ -484,10 +544,11 @@
                 container.innerHTML = `<span class="placeholder-text">Нет команд с такими звёздами</span>`;
                 return;
             }
+            const starsHtml = renderStars(team['Звёзды команды']);
             container.innerHTML = `
                 <div class="team-name">${team['Название команды'] || 'Без названия'}</div>
                 <div class="team-detail">${team['Страна'] || ''} • ${team['Лига'] || ''}</div>
-                <div style="font-size:0.8rem;color:#555;margin-top:4px;">⭐ ${team['Звёзды команды'] || '?'}</div>
+                <div class="team-stars">${starsHtml}</div>
             `;
         }
 
@@ -503,17 +564,14 @@
 
         // ---------- ОБНОВЛЕНИЕ ОСТАЛЬНОГО UI ----------
         function updateUI() {
-            // Версии FIFA
             fifaBtns.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.version === state.fifaVersion);
             });
 
-            // Тип команд
             typeBtns.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.type === state.teamType);
             });
 
-            // Звёзды
             updateStarUI('one', state.starsOne);
             updateStarUI('two', state.starsTwo);
         }
