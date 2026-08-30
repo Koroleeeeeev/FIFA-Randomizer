@@ -361,19 +361,19 @@
                         throw new Error('Данные должны быть массивом');
                     }
                     allTeams = data;
-                    console.log(`✅ Загружено ${allTeams.length} команд`);
+                    console.log(`Загружено ${allTeams.length} команд`);
                     onDataLoaded();
                 })
                 .catch(error => {
-                    console.error('❌ Ошибка загрузки:', error);
+                    console.error('Ошибка загрузки:', error);
                     loader.innerHTML = `
-                        <div class="error-text">⚠️ Ошибка загрузки данных</div>
+                        <div class="error-text">Ошибка загрузки данных</div>
                         <p style="margin-top:12px;font-size:0.9rem;color:#666;">
                             Проверьте, что файл <strong>TEAMS.json</strong> находится в той же папке, что и index.html<br>
                             <span style="font-size:0.8rem;">${error.message}</span>
                         </p>
                         <button onclick="location.reload()" style="margin-top:16px;padding:10px 30px;border-radius:30px;border:2px solid #1a1a2e;background:white;font-weight:600;cursor:pointer;">
-                            🔄 Обновить
+                            Обновить
                         </button>
                     `;
                 });
@@ -531,7 +531,7 @@
             updateStarUI('two', state.starsTwo);
         }
 
-        // ---------- ОБРАБОТЧИКИ (FIFA версии и тип) ----------
+        // ---------- ОБРАБОТЧИКИ ----------
         fifaBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 state.fifaVersion = this.dataset.version;
