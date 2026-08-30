@@ -233,7 +233,7 @@
 
         .result-area {
             width: 100%;
-            min-height: 90px;
+            min-height: 130px;
             background: white;
             border-radius: 16px;
             padding: 14px 10px;
@@ -246,6 +246,14 @@
             text-align: center;
             font-size: 0.95rem;
             line-height: 1.5;
+        }
+
+        .result-area .team-logo {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            margin-bottom: 6px;
+            display: block;
         }
 
         .result-area .team-name {
@@ -289,6 +297,7 @@
             .fifa-btn { padding: 6px 14px; font-size: 0.85rem; }
             .type-btn { padding: 8px 18px; font-size: 0.9rem; }
             .star-btn { font-size: 0.7rem; padding: 3px 10px; }
+            .result-area .team-logo { width: 50px; height: 50px; }
             .result-area .team-stars img { width: 16px; height: 16px; }
             .lang-btn { font-size: 0.6rem; padding: 2px 8px; }
         }
@@ -438,13 +447,11 @@
         const langRu = document.getElementById('langRu');
         const langEn = document.getElementById('langEn');
 
-        // ---------- ФУНКЦИИ ПОЛУЧЕНИЯ ДАННЫХ КОМАНДЫ (ДЛЯ ВАШЕГО JSON) ----------
-        // Название команды — всегда английское
+        // ---------- ФУНКЦИИ ПОЛУЧЕНИЯ ДАННЫХ ----------
         function getTeamName(team) {
             return team['Название команды_en'] || 'Без названия';
         }
 
-        // Страна — в зависимости от языка
         function getTeamCountry(team) {
             if (currentLang === 'ru') {
                 return team['Страна_ru'] || team['Страна_en'] || '';
@@ -453,9 +460,15 @@
             }
         }
 
-        // Лига — одна для всех
         function getTeamLeague(team) {
             return team['Лига'] || '';
+        }
+
+        // ---------- ФУНКЦИЯ ПОЛУЧЕНИЯ ЛОГОТИПА ----------
+        function getTeamLogo(teamName) {
+            // Кодируем имя для безопасного URL
+            const safeName = encodeURIComponent(teamName);
+            return `logos/${safeName}.png`;
         }
 
         // ---------- ФУНКЦИЯ ПЕРЕКЛЮЧЕНИЯ ЯЗЫКА ----------
@@ -537,7 +550,7 @@
             resultTwo.innerHTML = `<span class="placeholder-text" id="placeholderTwo">Нажмите "Случайная команда"</span>`;
         }
 
-        // ---------- ФУНКЦИЯ ДЛЯ ОТОБРАЖЕНИЯ ЗВЁЗД В РЕЗУЛЬТАТЕ ----------
+        // ---------- ФУНКЦИЯ ДЛЯ ОТОБРАЖЕНИЯ ЗВЁЗД ----------
         function renderStars(starsValue) {
             const num = parseFloat(starsValue);
             if (isNaN(num)) return '';
@@ -658,8 +671,10 @@
             const country = getTeamCountry(team);
             const league = getTeamLeague(team);
             const starsHtml = renderStars(team['Звёзды команды']);
+            const logoUrl = getTeamLogo(teamName);
 
             container.innerHTML = `
+                <img class="team-logo" src="${logoUrl}" alt="${teamName}" onerror="this.style.display='none'">
                 <div class="team-name">${teamName}</div>
                 <div class="team-detail">${country} • ${league}</div>
                 <div class="team-stars">${starsHtml}</div>
